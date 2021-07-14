@@ -2,6 +2,9 @@
 name: Methanol Analytics PullRequest trigger
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     types: [ assigned, opened, synchronize, reopened, ready_for_review ]
     branches: [ develop, test, master ]
@@ -26,25 +29,57 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
 
-    - name: Build
-      run: dotnet build "JM.Methanol.BackendServices.sln" --configuration ${{ env.BUILD_CONFIGURATION }}
+    # - name: Build
+    #   run: dotnet build "JM.Methanol.BackendServices.sln" --configuration ${{ env.BUILD_CONFIGURATION }}
 
-    - name: Test
-      run: dotnet test --no-restore --verbosity normal
+    # - name: Test
+    #   run: dotnet test --no-restore --verbosity normal
 
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@v1.6
+    # - name: SonarCloud Scan
+    #   uses: SonarSource/sonarcloud-github-action@v1.6
+    #   with:
+    #     projectBaseDir: my-custom-directory
+    #     args: >
+    #       -Dsonar.organization=venkatadorisala
+    #       -Dsonar.projectKey=methanol---analytics--service
+    #       -Dsonar.python.coverage.reportPaths=coverage.xml
+    #       -Dsonar.sources=lib/
+    #       -Dsonar.test.exclusions=tests/**
+    #       -Dsonar.tests=tests/
+    #       -Dsonar.verbose=true
+    #   env:
+    #     GITHUB_TOKEN: ${{ github.token }}
+    #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v1
       with:
-        projectBaseDir: my-custom-directory
-        args: >
-          -Dsonar.organization=my-organization
-          -Dsonar.projectKey=my-projectkey
-          -Dsonar.python.coverage.reportPaths=coverage.xml
-          -Dsonar.sources=lib/
-          -Dsonar.test.exclusions=tests/**
-          -Dsonar.tests=tests/
-          -Dsonar.verbose=true
+        path: ~\sonar\cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+
+    - name: Cache SonarCloud scanner
+      id: cache-sonar-scanner
+      uses: actions/cache@v1
+      with:
+        path: .\.sonar\scanner
+        key: ${{ runner.os }}-sonar-scanner
+        restore-keys: ${{ runner.os }}-sonar-scanner
+
+    - name: Install SonarCloud scanner
+      if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+      shell: powershell
+      run: |
+        New-Item -Path .\.sonar\scanner -ItemType Directory
+        dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+
+    - name: Build and analyze
       env:
-        GITHUB_TOKEN: ${{ github.token }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      shell: powershell
+      run: |
+        .\.sonar\scanner\dotnet-sonarscanner begin /k:"methanol---analytics--service" /o:"venkatadorisala" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+        dotnet build "JM.Methanol.BackendServices.sln" --configuration ${{ env.BUILD_CONFIGURATION }}
+        .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
