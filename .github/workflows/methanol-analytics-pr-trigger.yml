@@ -1,0 +1,50 @@
+# This is a basic workflow to help you get started with Actions
+name: Methanol Analytics PullRequest trigger
+
+on:
+  pull_request:
+    types: [ assigned, opened, synchronize, reopened, ready_for_review ]
+    branches: [ develop, test, master ]
+
+env:
+  DOTNET_VERSION: '3.1.100'
+  BUILD_CONFIGURATION: 'Debug'
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup .NET Core ${{ env.DOTNET_VERSION }}
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Install dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build "JM.Methanol.BackendServices.sln" --configuration ${{ env.BUILD_CONFIGURATION }}
+
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal
+
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@v1.6
+      with:
+        projectBaseDir: my-custom-directory
+        args: >
+          -Dsonar.organization=my-organization
+          -Dsonar.projectKey=my-projectkey
+          -Dsonar.python.coverage.reportPaths=coverage.xml
+          -Dsonar.sources=lib/
+          -Dsonar.test.exclusions=tests/**
+          -Dsonar.tests=tests/
+          -Dsonar.verbose=true
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+

@@ -1,0 +1,109 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AzureFunctionsVersion>v3</AzureFunctionsVersion>
+    <UserSecretsId>5a9c5213-0daa-412f-926a-0a123efb0642</UserSecretsId>
+    <AssemblyName>JM.Integration.Methanol.Services</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="bin\**" />
+    <EmbeddedResource Remove="bin\**" />
+    <None Remove="bin\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Interface\IMethanolProductionPerConverter.cs" />
+    <Compile Remove="Models\Converter.cs" />
+    <Compile Remove="Models\ConverterKpi.cs" />
+    <Compile Remove="Models\Customer.cs" />
+    <Compile Remove="Models\DataMetric.cs" />
+    <Compile Remove="Models\DataTemplate.cs" />
+    <Compile Remove="Models\ErrorDetail.cs" />
+    <Compile Remove="Models\FittingMetric.cs" />
+    <Compile Remove="Models\LevoMethanolDBContext.cs" />
+    <Compile Remove="Models\MasterTemplate.cs" />
+    <Compile Remove="Models\ModelDefinition.cs" />
+    <Compile Remove="Models\ModelPlantMapping.cs" />
+    <Compile Remove="Models\ModelVariable.cs" />
+    <Compile Remove="Models\OptimisedMetric.cs" />
+    <Compile Remove="Models\Plant.cs" />
+    <Compile Remove="Models\PlantKpi.cs" />
+    <Compile Remove="Models\PlantProvisionalUnit.cs" />
+    <Compile Remove="Models\PlantProvisonalUnit.cs" />
+    <Compile Remove="Models\ProcessDetail.cs" />
+    <Compile Remove="Models\Section.cs" />
+    <Compile Remove="Models\SectionKpi.cs" />
+    <Compile Remove="Models\Site.cs" />
+    <Compile Remove="Models\Test1.cs" />
+    <Compile Remove="Models\Test2.cs" />
+    <Compile Remove="Models\UnitsofMeasurement.cs" />
+    <Compile Remove="PreliminaryCheckUploadedFileV1.cs" />
+    <Compile Remove="Services\MethanolProductionPerConverterRequestProcessor.cs" />
+    <Compile Remove="Startup.cs" />
+    <Compile Remove="V1\MethanolProductionPerConverterV1.cs" />
+    <Compile Remove="VirusScanFunction.cs" />
+    <Compile Remove="VirusScanProcessor1.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="appsettings.Development.json" />
+  </ItemGroup>
+  <ItemGroup>
+
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.8.4" />
+    <PackageReference Include="Bricelam.EntityFrameworkCore.Pluralizer" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.17.0" />
+    <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Azure.WebJobs" Version="3.0.27" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.OpenApi" Version="0.7.2-preview" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Storage" Version="3.0.11" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.Metrics" Version="2.9.8" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.16" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.16">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.16" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.16" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.16">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Azure" Version="1.1.0" />
+
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.16" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.16" />
+
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.13" />
+    <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.8.0" />
+
+    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.13" />
+    <PackageReference Include="nClam" Version="5.0.1" />
+    <PackageReference Include="NPOI" Version="2.5.3" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="host.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="local.settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JM.Integration.Common\JM.Integration.Common.csproj" />
+    <ProjectReference Include="..\JM.Integration.Methanol.Common\JM.Integration.Methanol.Common.csproj" />
+    <ProjectReference Include="..\JM.Integration.Methanol.DB\JM.Integration.Methanol.DB.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,22 @@
+{
+  "IsEncrypted": false,
+
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "Gen2DataLakeConnectionString": "UseDevelopmentStorage=true",
+    "StorageAccountConnectionString": "DefaultEndpointsProtocol=https;AccountName=stadeveuevg001;AccountKey=JSXFiBRzN/3w59iLkhSqv6w1uXJpA8tdvE1Ko+Y0vmjV98HZ24hyq2GbKQYtUJfdq/MRma6/oRq+kZZ1cvZZXA==;EndpointSuffix=core.windows.net",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "SqlConnectionString": "Server=tcp:sql-dev-eu-levoshared-001.database.windows.net,1433;Initial Catalog=levo_methanol_dev;MultipleActiveResultSets=True;Encrypt=True;",
+    //"SqlConnectionString": "Server=sql-dev-eu-levoshared-001.database.windows.net,1433;Authentication=Active Directory Default; Database=levo_methanol_dev;MultipleActiveResultSets=True;Encrypt=True;",
+    "AzureKeyVaultEndpoint": "https://kv-dev-eu-methanol-001.vault.azure.net/",
+    "ClamAvServer": "avscandemo2.westeurope.azurecontainer.io",
+    //avscandemo2.westeurope.azurecontainer.io",
+    "ClamAvServerPort": 3310,
+    "AvCheckBlobContainer": "raw-data-storage",
+    "pre-chk-queue": "pre-chk-queue",
+    "familyName": "Methanol",
+    "APPINSIGHTS_INSTRUMENTATIONKEY": "09e4083a-b6c2-4f1d-9c44-9d8e4c24dbcc",
+    "AfterPrechkBlobContainer": "after-pre-chk"
+
+  }
+}
