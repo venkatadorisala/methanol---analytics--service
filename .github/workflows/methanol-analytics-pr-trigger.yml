@@ -4,7 +4,7 @@ name: Methanol Analytics PullRequest trigger
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     types: [ assigned, opened, synchronize, reopened, ready_for_review ]
     branches: [ develop, test, master ]
